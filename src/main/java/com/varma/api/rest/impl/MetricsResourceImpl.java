@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.MetricsResource;
+import com.varma.api.rest.MetricsResource;
 import com.varma.domain.service.DashboardService;
 import com.varma.model.MetricsResponse;
 import lombok.RequiredArgsConstructor;

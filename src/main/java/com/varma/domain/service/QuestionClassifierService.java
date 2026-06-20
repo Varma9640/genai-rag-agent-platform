@@ -16,4 +16,4 @@ public class QuestionClassifierService {
         }
         return RouteType.GENERAL;
     }
-    }
+}

@@ -1,5 +1,6 @@
-package com.varma.api;
+package com.varma.api.rest;
 
+import com.varma.api.swagger.StreamingSwagger;
 import com.varma.model.RagQueryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Validated
+@StreamingSwagger
 @Tag(name = "Streaming Resource")
 @RequestMapping("/api/v1/stream")
 public interface StreamingResource {

@@ -24,21 +24,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         @ApiResponse(responseCode = "200", description = "Document uploaded successfully",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = DocumentUploadResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = DocumentUploadResponse.class))),
 
         @ApiResponse(responseCode = "400", description = "Bad Request",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = ErrorResponse.class))),
 
         @ApiResponse(responseCode = "500", description = "Internal Server Error",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        )
+                        schema = @Schema(implementation = ErrorResponse.class)))
 })
 public @interface DocumentUploadSwagger {
 }

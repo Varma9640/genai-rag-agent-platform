@@ -29,23 +29,13 @@ public class RagQueryService {
     public String ask(RagQueryRequest ragQueryRequest) {
 
         metricsService.incrementQueryCount();
-
         log.info("Question : {}", ragQueryRequest.getQuestion());
+        float[] questionEmbedding = embeddingService.generateEmbedding(ragQueryRequest.getQuestion());
+        List<RetrievalResult> retrievalResults = similaritySearchService.findRelevantChunks(
+                        ragQueryRequest.getQuestion(), questionEmbedding);
 
-        float[] questionEmbedding =
-                embeddingService.generateEmbedding(ragQueryRequest.getQuestion());
-
-        List<RetrievalResult> retrievalResults =
-                similaritySearchService.findRelevantChunks(
-                        ragQueryRequest.getQuestion(),
-                        questionEmbedding);
-
-        List<DocumentChunk> chunks =
-                reRankingService.reRank(
-                        retrievalResults);
-
+        List<DocumentChunk> chunks = reRankingService.reRank(retrievalResults);
         if (chunks.isEmpty()) {
-
             log.warn(
                     "No relevant chunks found for question : {}",
                     ragQueryRequest.getQuestion());
@@ -56,21 +46,13 @@ public class RagQueryService {
                     """;
         }
 
-        String context =
-                contextBuilderService.buildContext(chunks);
+        String context = contextBuilderService.buildContext(chunks);
 
-        log.info(
-                "Context Length : {}",
-                context.length());
+        log.info("Context Length : {}", context.length());
+        String conversationMemory = chatMemoryService
+                        .getRecentConversation(ragQueryRequest.getQuestion());
 
-        String conversationMemory =
-                chatMemoryService
-                        .getRecentConversation(
-                                ragQueryRequest.getQuestion());
-
-        log.info(
-                "Conversation Memory Length : {}",
-                conversationMemory.length());
+        log.info("Conversation Memory Length : {}", conversationMemory.length());
 
         String prompt = """
                 You are a helpful AI assistant.
@@ -89,80 +71,38 @@ public class RagQueryService {
 
                 Answer:
                 """
-                .formatted(
-                        conversationMemory,
-                        context,
-                        ragQueryRequest.getQuestion()
+                .formatted(conversationMemory, context, ragQueryRequest.getQuestion()
                 );
 
         log.info("Invoking LLM Provider");
-
-        String answer =
-                fallbackLlmService.generateResponse(
-                        prompt);
-
-        log.info(
-                "Answer Length : {}",
-                answer.length());
-
-        promptAuditService.save(
-                ragQueryRequest.getQuestion(),
-                context,
-                prompt,
-                answer
-        );
-
-        queryHistoryService.save(
-                ragQueryRequest.getQuestion(),
-                answer
-        );
-
+        String answer = fallbackLlmService.generateResponse(prompt);
+        log.info("Answer Length : {}", answer.length());
+        promptAuditService.save(ragQueryRequest.getQuestion(), context, prompt, answer);
+        queryHistoryService.save(ragQueryRequest.getQuestion(), answer);
         chatMemoryService.save(ragQueryRequest.getQuestion(), ragQueryRequest.getSessionId(), answer);
-
         return answer;
     }
 
-    public List<DocumentChunk> retrieveChunks(
-            String question) {
+    public List<DocumentChunk> retrieveChunks(String question) {
 
-        float[] questionEmbedding =
-                embeddingService.generateEmbedding(
-                        question);
-
+        float[] questionEmbedding = embeddingService.generateEmbedding(question);
         List<RetrievalResult> retrievalResults =
-                similaritySearchService.findRelevantChunks(
-                        question,
-                        questionEmbedding);
-
-        return reRankingService.reRank(
-                retrievalResults);
+                similaritySearchService.findRelevantChunks(question, questionEmbedding);
+        return reRankingService.reRank(retrievalResults);
     }
 
-    public List<RetrievalResponse> debugRetrieval(
-            String question) {
-
-        float[] questionEmbedding =
-                embeddingService.generateEmbedding(
-                        question);
-
-        List<RetrievalResult> retrievalResults =
-                similaritySearchService.findRelevantChunks(
-                        question,
+    public List<RetrievalResponse> debugRetrieval(String question) {
+        float[] questionEmbedding = embeddingService.generateEmbedding(question);
+        List<RetrievalResult> retrievalResults = similaritySearchService.findRelevantChunks(question,
                         questionEmbedding);
 
-        List<DocumentChunk> chunks =
-                reRankingService.reRank(
-                        retrievalResults);
-
+        List<DocumentChunk> chunks = reRankingService.reRank(retrievalResults);
         return chunks.stream()
                 .map(chunk ->
                         RetrievalResponse.builder()
-                                .documentName(
-                                        chunk.getDocumentName())
-                                .chunkNumber(
-                                        chunk.getChunkNumber())
-                                .content(
-                                        chunk.getContent())
+                                .documentName(chunk.getDocumentName())
+                                .chunkNumber(chunk.getChunkNumber())
+                                .content(chunk.getContent())
                                 .build())
                 .toList();
     }

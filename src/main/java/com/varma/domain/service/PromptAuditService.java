@@ -21,7 +21,6 @@ public class PromptAuditService {
                 .answer(answer)
                 .createdDate(LocalDateTime.now())
                 .build();
-
         promptAuditRepository.save(audit);
     }
 }

@@ -2,73 +2,153 @@
 
 ## Overview
 
-GenAI RAG Agent Platform is an enterprise-grade Retrieval Augmented Generation (RAG) system built using Java 17, Spring Boot, ChromaDB, Ollama, Prometheus, and Grafana.
+GenAI RAG Agent Platform is an enterprise-grade Retrieval Augmented Generation (RAG) system built using Java 17, Spring Boot, LangChain4j, Ollama, OpenAI, H2 Database, Prometheus, and Swagger.
 
-The platform enables users to upload PDF documents, generate embeddings, store vectors in ChromaDB, retrieve relevant context using hybrid search and re-ranking, and generate AI-powered responses through Large Language Models (LLMs).
+The platform enables users to upload PDF documents, extract content, generate embeddings, perform similarity search, retrieve contextual information, and generate AI-powered responses using Large Language Models (LLMs).
+
+The platform also supports conversation memory, query history, prompt auditing, agent orchestration, streaming responses, and fallback LLM mechanisms.
 
 ---
 
 ## Features
 
-* PDF Upload and Parsing
+### Document Processing
+
+* PDF Upload
+* PDF Parsing
+* Text Extraction
 * Text Chunking
-* Embedding Generation
-* ChromaDB Vector Storage
-* Hybrid Search (Vector + Keyword)
-* Re-Ranking
+* Document Management
+
+### RAG Capabilities
+
+* Similarity Search
+* Context Retrieval
+* Context Builder
+* Retrieval Augmented Generation
+* Debug Retrieval API
+
+### AI Capabilities
+
+* Multi-LLM Support
+* Ollama Integration
+* OpenAI Integration
+* LLM Fallback Mechanism
+* Agent Routing
+* Agent Orchestration
+
+### Conversation Management
+
 * Session Memory
 * Conversation History
-* Agent Routing
-* Multi-LLM Support
-* LLM Fallback Mechanism
-* Streaming Responses (SSE)
-* Source Citation
+* Query History
+* Prompt Audit
+
+### Streaming
+
+* Server Sent Events (SSE)
+* Real-Time AI Response Streaming
+
+### Monitoring
+
+* Spring Boot Actuator
 * Prometheus Metrics
-* Grafana Dashboards
+
+### API Documentation
+
+* Swagger OpenAPI
 
 ---
 
 ## Architecture
 
 User
-→ REST API
-→ Agent Router
-→ RAG Engine
-→ Hybrid Search
-→ ChromaDB
-→ LLM
-→ Response
-→ Prometheus
-→ Grafana
+
+↓
+
+REST API Layer
+
+↓
+
+Agent Router
+
+↓
+
+RAG Engine
+
+↓
+
+Similarity Search
+
+↓
+
+Context Builder
+
+↓
+
+LLM Provider
+
+↓
+
+Response Generation
+
+↓
+
+Query History
+
+↓
+
+Prompt Audit
 
 ---
 
-## Tech Stack
+## Technology Stack
+
+### Backend
 
 * Java 17
 * Spring Boot 3
-* Spring AI
+* Spring Data JPA
+* Spring Validation
+
+### AI & LLM
+
+* LangChain4j
 * Ollama
-* ChromaDB
+* OpenAI
+
+### Database
+
 * H2 Database
+
+### Build Tool
+
 * Maven
-* Docker
+
+### Testing
+
+* JUnit 5
+* Mockito
+* MockMvc
+
+### Monitoring
+
+* Spring Boot Actuator
 * Prometheus
-* Grafana
+
+### Documentation
+
+* Swagger OpenAPI
 
 ---
 
 ## APIs
 
-### Document APIs
+### Chat APIs
 
-POST /api/v1/documents/upload
+POST /api/v1/chat/generate
 
-GET /api/v1/documents
-
-GET /api/v1/documents/{id}
-
-DELETE /api/v1/documents/delete/{id}
+---
 
 ### RAG APIs
 
@@ -76,26 +156,89 @@ POST /api/v1/rag/ask
 
 POST /api/v1/rag/debug
 
+---
+
+### Agent APIs
+
+POST /api/v1/agent/execute
+
+---
+
+### Streaming APIs
+
 POST /api/v1/stream/stream
+
+---
+
+### Document APIs
+
+POST /api/v1/documents/upload
+
+DELETE /api/v1/documents/delete/{id}
+
+GET /api/v1/documents
+
+GET /api/v1/documents/{id}
+
+DELETE /api/v1/documents/{id}
+
+---
+
+### Conversation APIs
+
+GET /api/v1/conversations
+
+GET /api/v1/conversations/{id}
+
+DELETE /api/v1/conversations/{id}
+
+---
+
+### Metrics APIs
+
+GET /api/v1/metrics
 
 ---
 
 ## Monitoring
 
-Prometheus:
+### Actuator
+
+http://localhost:8080/actuator
+
+### Prometheus
 
 http://localhost:9090
 
-Grafana:
+---
 
-http://localhost:3000
+## Testing
+
+* JUnit 5
+* Mockito
+* MockMvc
+
+### Test Coverage
+
+* 87% Class Coverage
+* 82% Line Coverage
 
 ---
 
 ## Future Enhancements
 
+* JWT Authentication
+* Spring Security
+* Role-Based Access Control
 * Redis Cache
 * Kafka Integration
-* Multi-Agent Orchestration
-* Role-Based Security
+* PostgreSQL Support
+* Docker Compose
 * Cloud Deployment
+* Multi-Agent Orchestration
+
+---
+
+## Author
+
+Developed using Java, Spring Boot, LangChain4j, Ollama, OpenAI, JPA, and modern RAG architecture principles.

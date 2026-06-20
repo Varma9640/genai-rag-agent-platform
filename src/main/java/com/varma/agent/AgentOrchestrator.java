@@ -11,11 +11,8 @@ public class AgentOrchestrator {
     private final AnswerGenerationTool answerGenerationTool;
 
     public String execute(String question) {
-
         String documentResult = documentSearchTool.search(question);
-
         String context = contextRetrievalTool.retrieve(documentResult);
-
         return answerGenerationTool.generateAnswer(context);
     }
 }

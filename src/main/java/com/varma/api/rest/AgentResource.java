@@ -1,4 +1,4 @@
-package com.varma.api;
+package com.varma.api.rest;
 
 
 import com.varma.api.swagger.AgentQuerySwagger;

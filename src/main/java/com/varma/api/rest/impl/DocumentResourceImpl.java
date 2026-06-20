@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.DocumentResource;
+import com.varma.api.rest.DocumentResource;
 import com.varma.domain.service.DocumentService;
 import com.varma.model.DocumentUploadRequest;
 import com.varma.model.DocumentUploadResponse;
@@ -20,7 +20,6 @@ public class DocumentResourceImpl implements DocumentResource {
     @Override
     public ResponseEntity<Void> delete(Long id) {
         documentService.delete(id);
-        return ResponseEntity.noContent()
-                .build();
+        return ResponseEntity.noContent().build();
     }
 }

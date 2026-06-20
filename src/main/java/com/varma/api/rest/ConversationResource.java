@@ -1,5 +1,6 @@
-package com.varma.api;
+package com.varma.api.rest;
 
+import com.varma.api.swagger.ConversationSwagger;
 import com.varma.model.ConversationResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,28 +16,18 @@ import java.util.List;
 
 @Validated
 @Tag(name = "Conversation Resource")
+@ConversationSwagger
 @RequestMapping(value = "/api/v1/conversations", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface ConversationResource {
-    @Operation(
-            summary = "Get Conversations",
-            description = "Retrieve all conversations")
+    @Operation(summary = "Get Conversations", description = "Retrieve all conversations")
     @GetMapping
-    ResponseEntity<List<ConversationResponse>>
-    getConversations();
+    ResponseEntity<List<ConversationResponse>> getConversations();
 
-    @Operation(
-            summary = "Get Conversation",
-            description = "Retrieve conversation by id")
+    @Operation(summary = "Get Conversation", description = "Retrieve conversation by id")
     @GetMapping("/{id}")
-    ResponseEntity<ConversationResponse>
-    getConversation(
-            @PathVariable Long id);
+    ResponseEntity<ConversationResponse> getConversation(@PathVariable Long id);
 
-    @Operation(
-            summary = "Delete Conversation",
-            description = "Delete conversation by id")
+    @Operation(summary = "Delete Conversation", description = "Delete conversation by id")
     @DeleteMapping("/{id}")
-    ResponseEntity<Void>
-    deleteConversation(
-            @PathVariable Long id);
+    ResponseEntity<Void> deleteConversation(@PathVariable Long id);
 }

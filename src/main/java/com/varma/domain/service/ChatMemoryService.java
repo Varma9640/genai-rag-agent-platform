@@ -13,10 +13,7 @@ import java.util.stream.Collectors;
 public class ChatMemoryService {
     private final ChatSessionRepository chatSessionRepository;
 
-    public void save(
-            String sessionId,
-            String question,
-            String answer) {
+    public void save(String sessionId, String question, String answer) {
 
         chatSessionRepository.save(
                 ChatSession.builder()
@@ -27,12 +24,10 @@ public class ChatMemoryService {
                         .build());
     }
 
-    public String getRecentConversation(
-            String sessionId) {
+    public String getRecentConversation(String sessionId) {
 
         return chatSessionRepository
-                .findBySessionIdOrderByCreatedDateAsc(
-                        sessionId)
+                .findBySessionIdOrderByCreatedDateAsc(sessionId)
                 .stream()
                 .map(chat ->
                         """
@@ -42,9 +37,7 @@ public class ChatMemoryService {
                                 Answer:
                                 %s
                                 """
-                                .formatted(
-                                        chat.getQuestion(),
-                                        chat.getAnswer()))
+                                .formatted(chat.getQuestion(), chat.getAnswer()))
                 .collect(Collectors.joining("\n"));
     }
 }

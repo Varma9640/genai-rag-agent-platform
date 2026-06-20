@@ -26,40 +26,21 @@ public class DocumentService {
     private final MetricsService metricsService;
     private final DocumentMetadataRepository documentMetadataRepository;
 
-    public DocumentUploadResponse upload(
-            DocumentUploadRequest request) {
+    public DocumentUploadResponse upload(DocumentUploadRequest request) {
 
-        String documentName =
-                request.getFile()
-                        .getOriginalFilename();
-
-        log.info(
-                "Processing Document : {}",
-                documentName);
-
-        String extractedText =
-                documentProcessor.processDocument(request);
-
-        List<String> chunks =
-                chunkingService.chunk(extractedText);
-
+        String documentName = request.getFile().getOriginalFilename();
+        log.info("Processing Document : {}", documentName);
+        String extractedText = documentProcessor.processDocument(request);
+        List<String> chunks = chunkingService.chunk(extractedText);
         for (int index = 0; index < chunks.size(); index++) {
-
-            String chunk =
-                    chunks.get(index);
-
-            float[] embedding =
-                    embeddingService.generateEmbedding(chunk);
-
-            chromaDbService.storeChunk(
-                    documentName,
+            String chunk = chunks.get(index);
+            float[] embedding = embeddingService.generateEmbedding(chunk);
+            chromaDbService.storeChunk(documentName,
                     index + 1,
-                    chunk,
-                    embedding);
+                    chunk, embedding);
         }
 
-        documentMetadataRepository.save(
-                DocumentMetadata.builder()
+        documentMetadataRepository.save(DocumentMetadata.builder()
                         .documentName(documentName)
                         .totalChunks(chunks.size())
                         .uploadedDate(LocalDateTime.now())
@@ -67,10 +48,7 @@ public class DocumentService {
 
         metricsService.incrementDocumentUploadCount();
 
-        log.info(
-                "Document Uploaded Successfully : {}",
-                documentName);
-
+        log.info("Document Uploaded Successfully : {}", documentName);
         return DocumentUploadResponse.builder()
                 .documentName(documentName)
                 .status("SUCCESS")
@@ -80,22 +58,15 @@ public class DocumentService {
     @Transactional
     public void delete(Long id) {
 
-        log.info(
-                "Deleting Document Id : {}",
-                id);
-
-        DocumentMetadata metadata =
-                documentMetadataRepository
+        log.info("Deleting Document Id : {}", id);
+        DocumentMetadata metadata = documentMetadataRepository
                         .findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
                                         "Document Not Found : " + id));
 
-        documentMetadataRepository
-                .delete(metadata);
-
-        log.info(
-                "Document Deleted : {}",
+        documentMetadataRepository.delete(metadata);
+        log.info("Document Deleted : {}",
                 metadata.getDocumentName());
     }
 }

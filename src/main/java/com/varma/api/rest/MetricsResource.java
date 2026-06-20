@@ -1,5 +1,6 @@
-package com.varma.api;
+package com.varma.api.rest;
 
+import com.varma.api.swagger.MetricsSwagger;
 import com.varma.model.MetricsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Validated
 @Tag(name = "Metrics Resource")
+@MetricsSwagger
 @RequestMapping(value = "/api/v1/metrics", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface MetricsResource {
     @Operation(summary = "Get Dashboard Metrics", description = "Retrieve platform metrics")

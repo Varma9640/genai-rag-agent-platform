@@ -14,11 +14,9 @@ public class LlmFactoryService {
     private String provider;
 
     public LlmClientService getClient() {
-
         if ("openai".equalsIgnoreCase(provider)) {
             return openAi;
         }
-
         return ollama;
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 public class ChromaDbConfig {
     @Value("${chromadb.url}")
     private String chromaDbUrl;
-
     public String getChromaDbUrl() {
         return chromaDbUrl;
     }

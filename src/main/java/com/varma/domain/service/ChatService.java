@@ -14,11 +14,8 @@ public class ChatService {
 
     public ChatResponse query(ChatRequest request) {
         log.info("Executing AI Chat Request");
-
         String answer = ollamaLlmClientService.generateResponse(request.getPrompt());
 
-        return ChatResponse.builder()
-                .response(answer)
-                .build();
+        return ChatResponse.builder().response(answer).build();
     }
 }

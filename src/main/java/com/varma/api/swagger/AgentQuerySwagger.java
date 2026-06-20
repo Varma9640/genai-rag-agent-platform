@@ -24,21 +24,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         @ApiResponse(responseCode = "200", description = "AI agent execution completed successfully",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = AgentQueryResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = AgentQueryResponse.class))),
 
         @ApiResponse(responseCode = "400", description = "Bad Request",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = ErrorResponse.class))),
 
         @ApiResponse(responseCode = "500", description = "Internal Server Error",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        )
+                        schema = @Schema(implementation = ErrorResponse.class)))
 })
 public @interface AgentQuerySwagger {
 }

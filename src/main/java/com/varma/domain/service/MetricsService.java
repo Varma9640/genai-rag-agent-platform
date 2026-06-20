@@ -19,11 +19,9 @@ public class MetricsService {
                         .description("Total Uploaded Documents")
                         .register(meterRegistry);
     }
-
     public void incrementQueryCount() {
         ragQueriesCounter.increment();
     }
-
     public void incrementDocumentUploadCount() {
         documentUploadsCounter.increment();
     }

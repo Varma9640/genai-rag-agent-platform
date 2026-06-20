@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.DocumentManagementResource;
+import com.varma.api.rest.DocumentManagementResource;
 import com.varma.domain.service.DocumentManagementService;
 import com.varma.model.DocumentResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +27,8 @@ public class DocumentManagementResourceImpl implements DocumentManagementResourc
     }
 
     @Override
-    public ResponseEntity<Void>
-    deleteDocument(Long id) {
+    public ResponseEntity<Void> deleteDocument(Long id) {
         service.deleteDocument(id);
-        return ResponseEntity.noContent()
-                .build();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -20,21 +20,10 @@ public class RagService {
     private final RagQueryService ragQueryService;
     private final QuestionClassifierService questionClassifierService;
 
-    public RagQueryResponse askQuestion(
-            RagQueryRequest request) {
-
-        RouteType route =
-                questionClassifierService.classify(
-                        request.getQuestion());
-
-        String answer =
-                agentRoutingService.ask(
-                        request);
-
-        List<DocumentChunk> chunks =
-                ragQueryService.retrieveChunks(
-                        request.getQuestion());
-
+    public RagQueryResponse askQuestion(RagQueryRequest request) {
+        RouteType route = questionClassifierService.classify(request.getQuestion());
+        String answer = agentRoutingService.ask(request);
+        List<DocumentChunk> chunks = ragQueryService.retrieveChunks(request.getQuestion());
         List<SourceResponse> sources =
                 chunks.stream()
                         .map(chunk ->
@@ -47,20 +36,13 @@ public class RagService {
                         .toList();
 
         return RagQueryResponse.builder()
-                .question(
-                        request.getQuestion())
-                .answer(
-                        answer)
-                .route(
-                        route.name())
-                .sources(
-                        sources)
+                .question(request.getQuestion())
+                .answer(answer)
+                .route(route.name())
+                .sources(sources)
                 .build();
     }
-    public List<RetrievalResponse> debugRetrieval(
-            RagQueryRequest request) {
-
-        return ragQueryService.debugRetrieval(
-                request.getQuestion());
+    public List<RetrievalResponse> debugRetrieval(RagQueryRequest request) {
+        return ragQueryService.debugRetrieval(request.getQuestion());
     }
 }

@@ -11,15 +11,10 @@ import java.util.List;
 @Service
 @Slf4j
 public class ReRankingService {
-    public List<DocumentChunk> reRank(
-            List<RetrievalResult> results) {
+    public List<DocumentChunk> reRank(List<RetrievalResult> results) {
 
         return results.stream()
-                .sorted(
-                        Comparator.comparingDouble(
-                                        RetrievalResult::getFinalScore)
-                                .reversed()
-                )
+                .sorted(Comparator.comparingDouble(RetrievalResult::getFinalScore).reversed())
                 .limit(5)
                 .map(RetrievalResult::getChunk)
                 .toList();

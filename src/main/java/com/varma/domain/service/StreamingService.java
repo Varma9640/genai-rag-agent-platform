@@ -15,23 +15,15 @@ public class StreamingService {
 
     public SseEmitter streamResponse(RagQueryRequest ragQueryRequest) {
 
-        SseEmitter emitter =
-                new SseEmitter(300000L);
-
+        SseEmitter emitter = new SseEmitter(300000L);
         new Thread(() -> {
 
             try {
+                String answer = agentRoutingService.ask(ragQueryRequest);
 
-                String answer =
-                        agentRoutingService.ask(ragQueryRequest);
-
-                String[] tokens =
-                        answer.split(" ");
-
+                String[] tokens = answer.split(" ");
                 for (String token : tokens) {
-
-                    emitter.send(
-                            StreamingResponse.builder()
+                    emitter.send(StreamingResponse.builder()
                                     .token(token + " ")
                                     .completed(false)
                                     .build()
@@ -39,26 +31,16 @@ public class StreamingService {
 
                     Thread.sleep(50);
                 }
-
-                emitter.send(
-                        StreamingResponse.builder()
+                emitter.send(StreamingResponse.builder()
                                 .completed(true)
                                 .build()
                 );
-
                 emitter.complete();
-
             } catch (Exception exception) {
-
-                log.error(
-                        "Streaming Error",
-                        exception);
-
-                emitter.completeWithError(
-                        exception);
+                log.error("Streaming Error", exception);
+                emitter.completeWithError(exception);
             }
         }).start();
-
         return emitter;
     }
 }

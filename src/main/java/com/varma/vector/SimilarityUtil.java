@@ -15,7 +15,6 @@ public class SimilarityUtil {
             normVector1 += Math.pow(vector1[index], 2);
             normVector2 += Math.pow(vector2[index], 2);
         }
-
         return dotProduct /
                 (
                         Math.sqrt(normVector1)

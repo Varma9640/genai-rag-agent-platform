@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ConversationResponse {
     private Long id;
-
     private String question;
-
     private String answer;
-
     private LocalDateTime createdDate;
 }

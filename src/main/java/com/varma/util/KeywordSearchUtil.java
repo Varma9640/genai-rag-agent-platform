@@ -8,7 +8,6 @@ public final class KeywordSearchUtil {
 
         String[] keywords = question.toLowerCase().split("\\s+");
         String text = content.toLowerCase();
-
         int matches = 0;
         for (String keyword : keywords) {
             if (text.contains(keyword)) {

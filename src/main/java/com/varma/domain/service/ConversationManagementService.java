@@ -29,11 +29,9 @@ public class ConversationManagementService {
                 .toList();
     }
 
-    public ConversationResponse getConversation(
-            Long id) {
+    public ConversationResponse getConversation(Long id) {
 
-        ChatSession session =
-                repository.findById(id)
+        ChatSession session = repository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
                                         "Conversation Not Found"));
@@ -46,13 +44,8 @@ public class ConversationManagementService {
                 .build();
     }
 
-    public void deleteConversation(
-            Long id) {
-
+    public void deleteConversation(Long id) {
         repository.deleteById(id);
-
-        log.info(
-                "Conversation Deleted : {}",
-                id);
+        log.info("Conversation Deleted : {}", id);
     }
 }

@@ -14,7 +14,6 @@ public class AgentService {
     private final AgentOrchestrator agentOrchestrator;
 
     public AgentQueryResponse query(AgentQueryRequest request) {
-
         String answer = agentOrchestrator.execute(request.getQuestion());
 
         return AgentQueryResponse.builder()

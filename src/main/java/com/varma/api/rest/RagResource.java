@@ -1,5 +1,6 @@
-package com.varma.api;
+package com.varma.api.rest;
 
+import com.varma.api.swagger.RagDebugSwagger;
 import com.varma.api.swagger.RagQuerySwagger;
 import com.varma.model.RagQueryRequest;
 import com.varma.model.RagQueryResponse;
@@ -18,13 +19,14 @@ import java.util.List;
 
 @Validated
 @Tag(name = "RAG Resource")
-@RagQuerySwagger
 @RequestMapping(value = "/api/v1/rag", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface RagResource {
+    @RagQuerySwagger
     @Operation(summary = "Query RAG Engine", description = "Retrieve answer using RAG")
     @PostMapping("/ask")
     ResponseEntity<RagQueryResponse> ask(@Valid @RequestBody RagQueryRequest request);
 
+    @RagDebugSwagger
     @Operation(summary = "Debug Retrieval", description = "Retrieve matching chunks")
     @PostMapping("/debug")
     ResponseEntity<List<RetrievalResponse>> debug(@Valid @RequestBody RagQueryRequest request);

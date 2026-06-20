@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.StreamingResource;
+import com.varma.api.rest.StreamingResource;
 import com.varma.domain.service.StreamingService;
 import com.varma.model.RagQueryRequest;
 import lombok.RequiredArgsConstructor;

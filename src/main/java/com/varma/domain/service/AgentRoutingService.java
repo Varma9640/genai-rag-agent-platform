@@ -14,22 +14,13 @@ public class AgentRoutingService {
     private final RagQueryService ragQueryService;
     private final GeneralChatService generalChatService;
 
-    public String ask(
-            RagQueryRequest ragQueryRequest) {
+    public String ask(RagQueryRequest ragQueryRequest) {
 
-        RouteType route =
-                questionClassifierService.classify(ragQueryRequest.getQuestion());
-
-        log.info(
-                "Selected Route : {}",
-                route);
-
+        RouteType route = questionClassifierService.classify(ragQueryRequest.getQuestion());
+        log.info("Selected Route : {}", route);
         if (route == RouteType.RAG) {
-
             return ragQueryService.ask(ragQueryRequest);
         }
-
-        return generalChatService.ask(
-                ragQueryRequest.getQuestion());
+        return generalChatService.ask(ragQueryRequest.getQuestion());
     }
 }

@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.ChatResource;
+import com.varma.api.rest.ChatResource;
 import com.varma.domain.service.ChatService;
 import com.varma.model.ChatRequest;
 import com.varma.model.ChatResponse;

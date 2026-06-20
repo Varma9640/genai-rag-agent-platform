@@ -1,4 +1,4 @@
-package com.varma.api;
+package com.varma.api.rest;
 
 import com.varma.api.swagger.DocumentUploadSwagger;
 import com.varma.model.DocumentUploadRequest;
@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/api/v1/documents", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface DocumentResource {
     @Operation(summary = "Upload PDF Document", description = "Upload PDF document into RAG platform")
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<DocumentUploadResponse> upload(@ModelAttribute DocumentUploadRequest requestF);
 
     @Operation(summary = "Delete Document", description = "Delete document by id")
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<Void> delete(
-            @PathVariable Long id);
+    ResponseEntity<Void> delete(@PathVariable Long id);
 }

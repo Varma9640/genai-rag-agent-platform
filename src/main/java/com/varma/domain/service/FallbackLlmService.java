@@ -14,17 +14,11 @@ public class FallbackLlmService {
     public String generateResponse(String prompt) {
 
         try {
-
             return llmFactoryService
                     .getClient()
                     .generateResponse(prompt);
-
         } catch (Exception exception) {
-
-            log.error(
-                    "Primary LLM Failed. Falling back to Ollama",
-                    exception);
-
+            log.error("Primary LLM Failed. Falling back to Ollama", exception);
             return ollamaLlmClientService
                     .generateResponse(prompt);
         }

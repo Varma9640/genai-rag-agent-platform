@@ -30,26 +30,20 @@ public class DocumentManagementService {
                 .toList();
     }
 
-    public DocumentResponse getDocument(
-            Long id) {
+    public DocumentResponse getDocument(Long id) {
 
-        DocumentMetadata document =
-                documentMetadataRepository.findById(id)
+        DocumentMetadata document = documentMetadataRepository.findById(id)
                         .orElseThrow();
 
         return DocumentResponse.builder()
                 .id(document.getId())
-                .documentName(
-                        document.getDocumentName())
-                .totalChunks(
-                        document.getTotalChunks())
-                .uploadedDate(
-                        document.getUploadedDate())
+                .documentName(document.getDocumentName())
+                .totalChunks(document.getTotalChunks())
+                .uploadedDate(document.getUploadedDate())
                 .build();
     }
 
-    public void deleteDocument(
-            Long id) {
+    public void deleteDocument(Long id) {
 
         documentMetadataRepository.deleteById(id);
     }

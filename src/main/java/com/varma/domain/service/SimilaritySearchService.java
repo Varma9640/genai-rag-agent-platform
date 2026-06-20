@@ -22,27 +22,15 @@ public class SimilaritySearchService {
 
     private final ChromaDbService chromaDbService;
 
-    public List<RetrievalResult> findRelevantChunks(
-            String question,
-            float[] queryEmbedding) {
+    public List<RetrievalResult> findRelevantChunks(String question, float[] queryEmbedding) {
 
-        List<RetrievalResult> results =
-                chromaDbService.getAllChunks()
+        List<RetrievalResult> results = chromaDbService.getAllChunks()
                         .stream()
                         .map(chunk -> {
 
-                            double vectorScore =
-                                    SimilarityUtil.cosineSimilarity(
-                                            queryEmbedding,
-                                            chunk.getEmbedding());
-
-                            double keywordScore =
-                                    KeywordSearchUtil.calculateScore(
-                                            question,
-                                            chunk.getContent());
-
-                            double finalScore =
-                                    (vectorScore * VECTOR_WEIGHT)
+                            double vectorScore = SimilarityUtil.cosineSimilarity(queryEmbedding, chunk.getEmbedding());
+                            double keywordScore = KeywordSearchUtil.calculateScore(question, chunk.getContent());
+                            double finalScore = (vectorScore * VECTOR_WEIGHT)
                                             +
                                             (keywordScore * KEYWORD_WEIGHT);
 
@@ -56,9 +44,7 @@ public class SimilaritySearchService {
                         .filter(result ->
                                 result.getFinalScore()
                                         >= SIMILARITY_THRESHOLD)
-                        .sorted(
-                                Comparator.comparingDouble(
-                                                RetrievalResult::getFinalScore)
+                        .sorted(Comparator.comparingDouble(RetrievalResult::getFinalScore)
                                         .reversed())
                         .limit(20)
                         .toList();

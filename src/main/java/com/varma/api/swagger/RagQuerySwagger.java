@@ -1,7 +1,6 @@
 package com.varma.api.swagger;
 
 import com.varma.exception.ErrorResponse;
-import com.varma.model.DocumentUploadResponse;
 import com.varma.model.RagQueryResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,21 +24,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         @ApiResponse(responseCode = "200", description = "RAG query processed successfully",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = RagQueryResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = RagQueryResponse.class))),
 
         @ApiResponse(responseCode = "400", description = "Bad Request",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        ),
+                        schema = @Schema(implementation = ErrorResponse.class))),
 
         @ApiResponse(responseCode = "500", description = "Internal Server Error",
                 content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ErrorResponse.class)
-                )
-        )
+                        schema = @Schema(implementation = ErrorResponse.class)))
 })
 public @interface RagQuerySwagger {
 }

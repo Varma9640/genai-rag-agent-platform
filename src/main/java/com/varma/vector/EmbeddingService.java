@@ -15,14 +15,12 @@ public class EmbeddingService {
 
     public float[] generateEmbedding(String text) {
 
-        float[] embedding =
-                ollamaEmbeddingModel
+        float[] embedding = ollamaEmbeddingModel
                         .embed(text)
                         .content()
                         .vector();
 
         log.info("Embedding Dimension : {}", embedding.length);
-
         return embedding;
     }
 }

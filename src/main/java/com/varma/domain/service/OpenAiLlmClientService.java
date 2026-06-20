@@ -11,7 +11,6 @@ public class OpenAiLlmClientService implements LlmClientService {
 
     @Override
     public String generateResponse(String prompt) {
-
         log.info("Invoking OpenAI LLM");
         return "OpenAI Response";
     }

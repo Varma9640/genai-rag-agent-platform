@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.RagResource;
+import com.varma.api.rest.RagResource;
 import com.varma.domain.service.RagService;
 import com.varma.model.RagQueryRequest;
 import com.varma.model.RagQueryResponse;

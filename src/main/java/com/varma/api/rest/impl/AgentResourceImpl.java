@@ -1,6 +1,6 @@
 package com.varma.api.rest.impl;
 
-import com.varma.api.AgentResource;
+import com.varma.api.rest.AgentResource;
 import com.varma.domain.service.AgentService;
 import com.varma.model.AgentQueryRequest;
 import com.varma.model.AgentQueryResponse;
@@ -15,7 +15,6 @@ public class AgentResourceImpl implements AgentResource {
 
     @Override
     public ResponseEntity<AgentQueryResponse> query(AgentQueryRequest request) {
-
         return ResponseEntity.ok(agentService.query(request));
     }
 }
